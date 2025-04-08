@@ -24,3 +24,25 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.homepage {
+  background-image: url('https://plus.unsplash.com/premium_photo-1663050996179-86096a38569e?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;  
+  background-position: center; 
+  background-attachment: fixed; 
+  height: 100vh;    
+  display: flex;
+  flex-direction: column;
+}
+
+.login {
+  padding: 20px 40px; /* Increased padding */
+  background-color: #007b6d; /* Example color for "Lake Herrick" (adjust the color as needed) */
+  color: white;
+}
+
+.signup {
+  padding: 20px 40px; /* Increased padding */
+  background-color: black; /* Example color for "Lake Herrick" (adjust the color as needed) */
+  color: white;
+}

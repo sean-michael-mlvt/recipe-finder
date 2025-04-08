@@ -2,26 +2,29 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-      <h1
+    <div className="homepage grid grid-rows-[auto_1fr] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      {/* Top Bar Section - Ensure header is at the top */}
+      <header className="topBar w-full flex justify-between items-center bg-white p-4 absolute top-0 left-0">
+        {/* Title */}
+        <h1
           style={{
             fontWeight: 'bold',
-            color: '#000000',
+            color: "black",
             fontFamily: 'Oswald, sans-serif',
             fontSize: '48px',
           }}
         >
-          Recipe Finder
+          RECIPE FINDER
         </h1>
-        <Image
-          className="dark:invert"
-          src="https://plus.unsplash.com/premium_photo-1663050996179-86096a38569e?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
+
+        {/* Navbar */}
+        <nav className="navbar flex gap-4">
+        <button className="login">LOGIN</button>
+        <button className="signup">SIGNUP</button>
+        </nav>
+      </header>
+
+      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
       </main>
     </div>
   );
