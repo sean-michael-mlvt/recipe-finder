@@ -36,13 +36,19 @@ body {
 }
 
 .login {
-  padding: 20px 40px; /* Increased padding */
-  background-color: #007b6d; /* Example color for "Lake Herrick" (adjust the color as needed) */
+  padding: 20px 40px; 
+  background-color: #007b6d;
   color: white;
 }
 
 .signup {
-  padding: 20px 40px; /* Increased padding */
-  background-color: black; /* Example color for "Lake Herrick" (adjust the color as needed) */
+  padding: 20px 40px;
+  background-color: black; 
+  color: white;
+}
+
+.get-started {
+  padding: 15px 33px; 
+  background-color: #007b6d;
   color: white;
 }

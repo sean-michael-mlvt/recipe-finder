@@ -24,7 +24,33 @@ export default function Home() {
         </nav>
       </header>
 
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+      <main className="homepage flex flex-col gap-[32px] row-start-2 items-center sm:items-start justify-center h-full relative z-10">
+      <h1
+          style={{
+            fontWeight: 'bold',
+            color: "white",
+            fontFamily: 'Oswald, sans-serif',
+            fontSize: '48px',
+          }}
+        >
+          FIND RECIPES
+        </h1>
+
+        <h3
+          style={{
+            fontWeight: 'bold',
+            color: "white",
+            fontFamily: 'Oswald, sans-serif',
+            fontSize: '24px',
+          }}
+        >
+          THAT USE WHAT YOU ALREADY HAVE
+        </h3>
+
+        <button className="get-started">
+          GET STARTED
+        </button>
+
       </main>
     </div>
   );
