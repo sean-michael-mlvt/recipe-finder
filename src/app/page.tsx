@@ -29,7 +29,6 @@ export default function Home() {
           style={{
             fontWeight: 'bold',
             color: "white",
-            fontFamily: 'Oswald, sans-serif',
             fontSize: '48px',
           }}
         >
@@ -40,7 +39,6 @@ export default function Home() {
           style={{
             fontWeight: 'bold',
             color: "white",
-            fontFamily: 'Oswald, sans-serif',
             fontSize: '24px',
           }}
         >
