@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* Global Variables */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -20,7 +21,7 @@
 }
 
 body {
-  background: var(--background);
+  background: var(--color-chapel-bell-white);
   color: var(--foreground);
   font-family: var(--font-merriweather-sans), sans-serif;
 }
@@ -37,6 +38,28 @@ h1, h2, h3, h4, h5, h6 {
   --color-arch-black: #000000;
 }
 
+/* Custom Global ClassNames for color & Font */
+.bg-lake-herrick {
+  background-color: var(--color-lake-herrick);
+}
+
+.bg-bulldog-red {
+  background-color: var(--color-bulldog-red);
+}
+
+.text-oswald {
+  font-family: var(--font-oswald), "helvetica", "sans-serif";
+}
+
+.text-merriwether-sans {
+  font-family: var(--font-merriweather-sans), "sans-serif";
+}
+
+/* Additional Styles */
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .homepage {
   background-image: url('https://plus.unsplash.com/premium_photo-1663050996179-86096a38569e?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
   background-size: cover;  
@@ -47,20 +70,8 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
 }
 
-.login {
-  padding: 20px 40px; 
-  background-color: #007b6d;
-  color: white;
-}
-
-.signup {
-  padding: 20px 40px;
-  background-color: black; 
-  color: white;
-}
-
 .get-started {
   padding: 15px 33px; 
-  background-color: #007b6d;
+  background-color: var(--color-lake-herrick);
   color: white;
 }

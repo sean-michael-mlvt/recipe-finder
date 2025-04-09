@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import type { Metadata } from "next";
 import { Merriweather_Sans, Oswald } from "next/font/google";
 import "./globals.css";
@@ -10,7 +11,7 @@ const merriweatherSans = Merriweather_Sans({
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
-  weight: ["400"], // Regular (default is 400)
+  weight: ["500"], // Regular (default is 400)
 });
 
 export const metadata: Metadata = {
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body
         className={`${merriweatherSans.variable} ${oswald.variable} antialiased`}
       >
+        <Navbar></Navbar>
         {children}
       </body>
     </html>
