@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${merriweatherSans.variable} ${oswald.variable} antialiased`}
+        className={`${merriweatherSans.variable} ${oswald.variable} antialiased min-h-screen flex flex-col`}
       >
         <Navbar></Navbar>
         {children}

@@ -1,31 +1,19 @@
-import Image from "next/image";
+import bgImage from '@/assets/ingredient-board-dark.jpg';
 
 export default function Home() {
   return (
-    <div className="homepage grid grid-rows-[auto_1fr] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="homepage relative grid grid-rows-[auto_1fr] items-center justify-items-center p-8 gap-16 flex-grow font-[family-name:var(--font-geist-sans)]" style={{backgroundImage: `${bgImage}`}}>
 
-      <main className="homepage flex flex-col gap-[32px] row-start-2 items-center justify-center h-full relative z-10">
-      <h1
-          style={{
-            fontWeight: 'bold',
-            color: "white",
-            fontSize: '48px',
-          }}
-        >
-          FIND RECIPES
-        </h1>
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/40 z-0" />
 
-        <h3
-          style={{
-            fontWeight: 'bold',
-            color: "white",
-            fontSize: '24px',
-          }}
-        >
-          THAT USE WHAT YOU ALREADY HAVE
-        </h3>
+      {/* Main Content */}
+      <main className="flex flex-col gap-[32px] row-start-2 items-center justify-center h-full relative z-10">
+        <h1 className="text-8xl text-white"> FIND RECIPES </h1>
 
-        <button className="get-started">
+        <h3 className="text-3xl text-white"> THAT USE WHAT YOU ALREADY HAVE </h3>
+
+        <button className="cursor-pointer flex items-center text-2xl text-white bg-lake-herrick text-oswald hover:text-white px-7 py-3">
           GET STARTED
         </button>
 
