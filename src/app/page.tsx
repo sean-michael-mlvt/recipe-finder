@@ -9,9 +9,9 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="flex flex-col gap-[32px] row-start-2 items-center justify-center h-full relative z-10">
-        <h1 className="text-8xl text-white"> FIND RECIPES </h1>
+        <h1 className="text-5xl md:text-8xl text-white"> FIND RECIPES </h1>
 
-        <h3 className="text-3xl text-white"> THAT USE WHAT YOU ALREADY HAVE </h3>
+        <h3 className="text-l md:text-3xl text-white"> THAT USE WHAT YOU ALREADY HAVE </h3>
 
         <button className="cursor-pointer flex items-center text-2xl text-white bg-lake-herrick text-oswald hover:text-white px-7 py-3">
           GET STARTED
