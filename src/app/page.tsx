@@ -1,6 +1,16 @@
+"use client";
+
 import bgImage from '@/assets/ingredient-board-dark.jpg';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
+
+  // Function to be called when Get Started button is clicked
+  const handleGetStarted = () => {
+    router.push('/pantry');
+  };
+
   return (
     <div className="homepage relative grid grid-rows-[auto_1fr] items-center justify-items-center p-8 gap-16 flex-grow font-[family-name:var(--font-geist-sans)]" style={{backgroundImage: `${bgImage}`}}>
 
@@ -13,7 +23,7 @@ export default function Home() {
 
         <h3 className="text-l md:text-3xl text-white"> THAT USE WHAT YOU ALREADY HAVE </h3>
 
-        <button className="cursor-pointer flex items-center text-2xl text-white bg-lake-herrick text-oswald hover:text-white px-7 py-3">
+        <button className="cursor-pointer flex items-center text-2xl text-white bg-lake-herrick text-oswald hover:text-white px-7 py-3" onClick={handleGetStarted}>
           GET STARTED
         </button>
 

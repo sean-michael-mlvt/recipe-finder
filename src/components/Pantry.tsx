@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 interface Ingredient {
     id: string, 
     name: string
@@ -20,11 +22,18 @@ interface PantryProps {
  */
 function Pantry({pantryContents, onRemove}: PantryProps) {
 
+    const router = useRouter();
+
     // Function to be called when Save Pantry button is clicked
     const handleSavePantry = () => {
         console.log("PANTRY CONTENTS:");
         console.log(pantryContents);
     }
+
+    // Function to be called when View Recipes button is clicked
+    const handleViewRecipes = () => {
+        router.push('/new-recipes');
+    };
 
     return (
         <div className="w-full md:h-full h-[65vh] md:w-7/12 bg-white flex flex-col p-1 md:p-5 gap-5">
@@ -61,7 +70,9 @@ function Pantry({pantryContents, onRemove}: PantryProps) {
                 >
                     SAVE PANTRY
                 </button>
-                <button className="cursor-pointer text-2xl text-white text-oswald px-6 py-3 bg-bulldog-red">
+                <button className="cursor-pointer text-2xl text-white text-oswald px-6 py-3 bg-bulldog-red"
+                    onClick={handleViewRecipes}
+                >
                     VIEW RECIPES
                 </button>
             </span>
