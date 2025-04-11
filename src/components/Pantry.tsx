@@ -10,6 +10,14 @@ interface PantryProps {
     onRemove: (id: string) => void;
 }
 
+/**
+ * This component displays the Ingredients found in pantryContents, with the ability to remove 
+ * ingredients, save the pantry, and move to new-recipes page to see recipes based on your pantry.
+ * 
+ * @param pantryContents A list of Ingredient objects to display
+ * @param onRemove A callback to remove an ingredient (pass in its id) from the pantryContents 
+ *  
+ */
 function Pantry({pantryContents, onRemove}: PantryProps) {
 
     // Function to be called when Save Pantry button is clicked

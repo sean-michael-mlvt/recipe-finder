@@ -63,13 +63,13 @@ const Navbar = () => {
                         <div className='hidden md:ml-6 md:block'>
                             <div className='flex space-x-2 h-full items-center'>
                                 <Link
-                                href='/'
+                                href='/pantry'
                                 className='text-xl text-black hover:border-b-2 hover:border-black rounded-md px-3 py-2'
                                 >
                                 Pantry
                                 </Link>
                                 <Link
-                                href='/'
+                                href='/new-recipes'
                                 className='text-xl text-black hover:border-b-2 hover:border-black rounded-md px-3 py-2'
                                 >
                                 Recipes
