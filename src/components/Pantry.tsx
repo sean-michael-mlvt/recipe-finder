@@ -29,9 +29,9 @@ function Pantry({pantryContents, onRemove}: PantryProps) {
                     {pantryContents.map((ingredient) => (
                         <div
                         key={ingredient.id}
-                        className="flex items-center gap-2 border-2 border-black rounded-[12px] px-4 py-2 text-black text-lg relative group bg-white"
+                        className="flex items-center gap-2 border-2 border-black rounded-[12px] px-3 pl-4 py-2 text-black text-lg relative group bg-white text-oswald"
                         >
-                            {ingredient.name}
+                            {ingredient.name.toUpperCase()}
 
                             {/* X button for removing item */}
                             <button
@@ -47,7 +47,7 @@ function Pantry({pantryContents, onRemove}: PantryProps) {
             </div>
 
             {/* Bottom Buttons */}
-            <span className="flex justify-end gap-5">
+            <span className="flex justify-center md:justify-end gap-5">
                 <button className="cursor-pointer text-2xl text-white text-oswald px-6 py-3 bg-lake-herrick" 
                     onClick={handleSavePantry}
                 >

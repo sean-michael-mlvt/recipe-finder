@@ -13,8 +13,12 @@ interface Ingredient {
 function PantryPage() {
 
     // State variables
-    const[allIngredients, setAllIngredients] = useState<Ingredient[]>([]);    // For populating form dropdown & search
-    const[pantryContents, setPantryContents] = useState<Ingredient[]>([]);    // For displaying & saving pantry contents
+    const[allIngredients, setAllIngredients] = useState<Ingredient[]>([]);      // For populating form dropdown & search
+    const [pantryContents, setPantryContents] = useState<Ingredient[]>([        // For displaying & saving pantry contents
+        { id: "14412", name: "water" },
+        { id: "2047", name: "salt" },
+        { id: "4053", name: "olive oil" }
+    ]);                                                                       
 
     // Takes an Ingredient object and adds it to pantryContents if it is not already present
     const addToPantry = (ingredient: Ingredient) => {
