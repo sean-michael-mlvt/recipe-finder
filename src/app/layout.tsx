@@ -15,7 +15,7 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-  title: "Rceipe Finder",
+  title: "Recipe Finder",
   description: "Find recipes with ingredients you have at home",
 };
 

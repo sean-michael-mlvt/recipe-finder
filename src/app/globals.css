@@ -36,7 +36,7 @@ h1, h2, h3, h4, h5, h6 {
 
 :root {
   --color-lake-herrick: #00A3AD;
-  --color-light-stegman: ##CFD1D1;  
+  --color-light-stegman: #CFD1D1;  
   --color-bulldog-red: #BA0C2F;   
   --color-chapel-bell-white: #FFFFFF;        
   --color-arch-black: #000000;
@@ -49,6 +49,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .bg-bulldog-red {
   background-color: var(--color-bulldog-red);
+}
+
+.bg-light-stegman {
+  background-color: var(--color-light-stegman);
 }
 
 .text-oswald {

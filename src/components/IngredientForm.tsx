@@ -35,7 +35,7 @@ function IngredientForm({ingredients, pantryItems, onAddIngredient}: IngredientF
 
     return (
 
-        <div className="w-full md:h-full h-[70vh] md:w-5/12 flex flex-col md:p-5">
+        <div className="w-full md:h-full h-[70vh] md:w-5/12 flex flex-col p-1 md:p-5">
 
             <h1 className="text-4xl mb-5">EDIT YOUR PANTRY</h1>
 
@@ -44,11 +44,11 @@ function IngredientForm({ingredients, pantryItems, onAddIngredient}: IngredientF
                     onChange={(e) => setSearch(e.target.value)} className="w-full bg-white p-4 border rounded mb-6 rounded-xl border-none"
                 />
                 <div className="flex-grow overflow-auto p-1">
-                    <ul className="space-y-2 max-h-100">
+                    <ul className="space-y-2 max-h-80">
                         {filtered.slice(0, 50).map((ingredient) => (
                             <li key={ingredient.id}>
                                 <button
-                                    className="w-full text-left px-4 py-4 bg-gray-100 hover:bg-gray-200 rounded-md text-oswald text-xl"
+                                    className="w-full text-left p-3 md:p-4 bg-gray-100 hover:bg-gray-200 rounded-md text-oswald  text-lg md:text-xl"
                                     onClick={() => onAddIngredient(ingredient)}
                                     >
                                     + {ingredient.name.toUpperCase()}

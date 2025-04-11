@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 
 import IngredientForm from "@/components/IngredientForm";
+import Pantry from "@/components/Pantry";
 
 interface Ingredient {
     id: string, 
@@ -21,6 +22,11 @@ function PantryPage() {
             setPantryContents(prev => [...prev, ingredient]);
         }
     }
+
+    // Removes an ingredient (by id) from pantryContents
+    const removeFromPantry = (id: string) => {
+        setPantryContents(prev => prev.filter(item => item.id !== id));
+    };
 
     // Fetch .csv file containing the list of popular ingredients to choose from
     useEffect(() => {
@@ -43,10 +49,10 @@ function PantryPage() {
     }, []);
 
     return(
-        <div className="flex flex-col md:flex-row items-center p-5 gap-5 flex-grow">
+        <div className="flex flex-col md:flex-row items-center p-5 gap-4 flex-grow">
             {/* <div className="h-50 w-full md:h-full h-[65vh] md:w-5/12 bg-lake-herrick"></div> */}
             <IngredientForm ingredients={allIngredients} pantryItems={pantryContents} onAddIngredient={addToPantry}></IngredientForm>
-            <div className="h-50 w-full md:h-full h-[65vh] md:w-7/12 bg-gray-300"></div>
+            <Pantry pantryContents={pantryContents} onRemove={removeFromPantry} ></Pantry>
         </div>
     );
 }
