@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['plus.unsplash.com'], // 👈 Add allowed domain here
+    domains: ['plus.unsplash.com', 'img.spoonacular.com'], 
   },
 };
 

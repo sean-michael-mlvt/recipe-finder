@@ -25,7 +25,10 @@ function NewRecipes() {
         `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${query}&number=6&apiKey=${process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY}`
       );
       const data = await res.json();
-      setRecipes(data);
+      console.log("Spoonacular API response:", data);
+      console.log("ENV KEY:", process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY);
+
+  setRecipes(data);
     };
 
     fetchRecipes();
