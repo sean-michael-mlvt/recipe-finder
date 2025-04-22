@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import type { Metadata } from "next";
 import { Merriweather_Sans, Oswald } from "next/font/google";
 import "./globals.css";
+import { auth } from "../auth";
 
 const merriweatherSans = Merriweather_Sans({
   variable: "--font-merriweather-sans",
@@ -19,17 +20,20 @@ export const metadata: Metadata = {
   description: "Find recipes with ingredients you have at home",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const session = await auth();
+
   return (
     <html lang="en">
       <body
         className={`${merriweatherSans.variable} ${oswald.variable} antialiased min-h-screen flex flex-col`}
       >
-        <Navbar></Navbar>
+        <Navbar session={session}></Navbar>
         {children}
       </body>
     </html>

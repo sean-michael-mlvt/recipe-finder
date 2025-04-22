@@ -3,19 +3,39 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import logo from '../assets/main-logo.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Session } from "next-auth";
+import { doLogout } from "../app/actions/index";
 
 import styles from './Navbar.module.css';
 
-const Navbar = () => {
-
-    const [isLoggedIn,setIsLoggedIn ] = useState(false);
-
-    const handleLogin = () => {
-        setIsLoggedIn(prev => !prev);
-
+interface Session {
+    user?: {
+        name?: string;
+        email?: string;
+        image?: string;
     }
+}
 
+interface NavbarProps {
+    session: Session | null;
+}
+
+const Navbar = ({ session }: NavbarProps) => {
+
+    const [isLoggedIn, setIsLoggedIn ] = useState(!!session?.user);
+
+    useEffect(() => {
+        setIsLoggedIn(!!session?.user);
+    }, [session]);
+    
+    const handleLogout = () => {
+        doLogout();
+        setIsLoggedIn(!!session?.user);
+    };
+
+    console.log("isLoggedIn: " + isLoggedIn);
+    console.log("session?.user: " + session?.user)
     return (
         <nav className={styles.navBorder}>
             <div className='mx-auto px-2 sm:px-6 lg:px-8 py-4'>
@@ -79,38 +99,35 @@ const Navbar = () => {
                     </div>
 
                     {/* <!-- Right Side Menu (Logged Out - Login) --> */}
-                    { 
-                    !isLoggedIn && (
-                            <div className='hidden md:block md:ml-6'>
+                    { isLoggedIn && session?.user ? (
+                        <>
+                        <span className='text-oswald text-2xl '>WELCOME, {session.user?.name?.toUpperCase() || session.user?.email}</span>
+                        <div className='hidden md:block md:ml-6'>
                             <div className='flex items-center'>
-                                <button onClick = {handleLogin} className='cursor-pointer flex items-center text-2xl text-white bg-lake-herrick text-oswald hover:text-white px-6 py-3'>
-                                <span>LOGIN</span>
-                                </button>
-                            </div>
-                            </div>
-                    )
-                    }
-
-                    {/* <!-- Right Side Menu (Logged Out - Register) --> */}
-                    { !isLoggedIn && (
-                            <div className='hidden md:block md:ml-6'>
-                            <div className='flex items-center'>
-                                <button onClick = {handleLogin} className='cursor-pointer flex items-center text-2xl text-white bg-black text-oswald hover:text-white px-6 py-3'>
-                                <span>REGISTER</span>
-                                </button>
-                            </div>
-                            </div>
-                    )}
-
-                    {/* <!-- Right Side Menu (Logged In - Logout) --> */}
-                    { isLoggedIn && (
-                            <div className='hidden md:block md:ml-6'>
-                            <div className='flex items-center'>
-                                <button onClick = {handleLogin} className='cursor-pointer flex items-center text-2xl text-white bg-black text-oswald hover:text-white px-6 py-3'>
+                                <button onClick = {handleLogout} className='cursor-pointer flex items-center text-2xl text-white bg-black text-oswald hover:text-white px-6 py-3'>
                                 <span>LOGOUT</span>
                                 </button>
                             </div>
+                        </div>
+                        </>
+                    ) : (
+                        <>
+                        <div className='hidden md:block md:ml-6'>
+                            <div className='flex items-center'>
+                                <button className='cursor-pointer flex items-center text-2xl text-white bg-lake-herrick text-oswald hover:text-white px-6 py-3'>
+                                <Link href="/login">LOGIN</Link>
+                                </button>
                             </div>
+                        </div>
+
+                        <div className='hidden md:block md:ml-6'>
+                        <div className='flex items-center'>
+                            <button className='cursor-pointer flex items-center text-2xl text-white bg-black text-oswald hover:text-white px-6 py-3'>
+                            <Link href="/signup">SIGNUP</Link>
+                            </button>
+                        </div>
+                        </div>
+                        </>
                     )}
 
                 </div>
