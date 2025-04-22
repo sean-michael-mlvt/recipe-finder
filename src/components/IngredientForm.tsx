@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 interface Ingredient {
-    id: string, 
+    _id: string, 
     name: string
 }
 
@@ -29,7 +29,7 @@ function IngredientForm({ingredients, pantryItems, onAddIngredient}: IngredientF
     const filtered = ingredients.filter(
         (i) => { 
             return i.name.toLowerCase().includes(search.toLowerCase()) && 
-            !pantryItems.some(inPantry => inPantry.id === i.id);
+            !pantryItems.some(inPantry => inPantry._id === i._id);
         }
     );
 
@@ -50,7 +50,7 @@ function IngredientForm({ingredients, pantryItems, onAddIngredient}: IngredientF
                 <div className="flex-grow overflow-auto p-1">
                     <ul className="space-y-2 max-h-80">
                         {filtered.slice(0, 50).map((ingredient) => (
-                            <li key={ingredient.id}>
+                            <li key={ingredient._id}>
                                 <button
                                     className="w-full text-left p-3 md:p-4 bg-gray-100 hover:bg-gray-200 rounded-md text-oswald  text-lg md:text-xl"
                                     onClick={() => onAddIngredient(ingredient)}
