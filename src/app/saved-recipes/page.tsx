@@ -68,7 +68,7 @@ function SavedRecipes() {
                     <p><strong>Your Ingredients Used:</strong> {recipe.userIngredients.join(', ')}</p>
                     <p><strong>Other Ingredients Used:</strong> {recipe.otherIngredients.join(', ')}</p>
                     </div>
-                    <button className="text-gray-600 text-xl">&#9734;</button> {/*Right now just has a star, may want to update to bookmark symbol in the future*/}
+                    <button className="text-red-500 text-xl">⭐</button> {/*Right now just has a star, may want to update to bookmark symbol in the future*/}
                 </div>
                 ))}
 
