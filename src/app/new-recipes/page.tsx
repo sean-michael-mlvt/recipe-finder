@@ -20,17 +20,33 @@ function NewRecipes() {
 
   useEffect(() => {
     const fetchRecipes = async () => {
-      const query = pantry.join(',');
-      const res = await fetch(
-        `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${query}&number=6&apiKey=${process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY}`
-      );
-      const data = await res.json();
-      console.log("Spoonacular API response:", data);
-      console.log("ENV KEY:", process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY);
-
-  setRecipes(data);
+      try {
+        const query = pantry.join(',');
+        const res = await fetch(
+          `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${query}&number=6&apiKey=${process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY}`
+        );
+  
+        if (!res.ok) {
+          throw new Error(`API request failed: ${res.status}`);
+        }
+  
+        const data = await res.json();
+        console.log("Spoonacular API response:", data);
+  
+        // ✅ Ensure `data` is an array before setting state
+        if (!Array.isArray(data)) {
+          console.error("Unexpected API response:", data);
+          setRecipes([]); // Set empty array to prevent crashes
+          return;
+        }
+  
+        setRecipes(data);
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+        setRecipes([]); // Avoid `map` errors by ensuring an empty array on failure
+      }
     };
-
+  
     fetchRecipes();
   }, []);
 
