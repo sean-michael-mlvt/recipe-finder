@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface Ingredient {
     id: string, 
@@ -23,11 +24,14 @@ interface PantryProps {
 function Pantry({pantryContents, onRemove}: PantryProps) {
 
     const router = useRouter();
+    const { data: session } = useSession();
 
     // Function to be called when Save Pantry button is clicked
     const handleSavePantry = () => {
         console.log("PANTRY CONTENTS:");
         console.log(pantryContents);
+
+
     }
 
     // Function to be called when View Recipes button is clicked
