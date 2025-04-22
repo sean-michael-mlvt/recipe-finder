@@ -3,22 +3,32 @@ import connectMongoDB from "../../../../config/mongodb";
 import Pantry from "@/models/PantrySchema";
 import User from "@/models/UserSchema";
 
-export async function POST(request: NextRequest) {
-    const { email, ingredients } = await request.json();
+export async function PUT(request: NextRequest) {
+  const { email, ingredients } = await request.json();
 
-    await connectMongoDB();
+  await connectMongoDB();
 
+  try {
     const user = await User.findOne({ email });
 
     if (!user) {
-        return NextResponse.json({ message: "User not found" }, { status: 404 });
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    await Pantry.create({
-        owner: user._id,
-        ingredients: ingredients,
-    });
+    const result = await Pantry.updateOne(
+      { owner: user._id },
+      { $set: { ingredients } },
+      { upsert: true }
+    );
 
-    return NextResponse.json({ message: "Pantry saved" }, { status: 201 });
-}   
+    const existingPantryPresent = result.matchedCount > 0;
 
+    return NextResponse.json(
+      { message: existingPantryPresent ? "Pantry updated" : "Pantry created" },
+      { status: existingPantryPresent ? 200 : 201 }
+    );
+  } catch (error) {
+    console.error("Pantry error:", error);
+    return NextResponse.json({ message: "Error saving pantry" }, { status: 500 });
+  }
+}

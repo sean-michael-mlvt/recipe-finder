@@ -6,7 +6,7 @@ import IngredientForm from "@/components/IngredientForm";
 import Pantry from "@/components/Pantry";
 
 interface Ingredient {
-    id: string, 
+    _id: string, 
     name: string
 }
 
@@ -15,21 +15,21 @@ function PantryPage() {
     // State variables
     const[allIngredients, setAllIngredients] = useState<Ingredient[]>([]);      // For populating form dropdown & search
     const [pantryContents, setPantryContents] = useState<Ingredient[]>([        // For displaying & saving pantry contents
-        { id: "14412", name: "water" },
-        { id: "2047", name: "salt" },
-        { id: "4053", name: "olive oil" }
+        { _id: "14412", name: "water" },
+        { _id: "2047", name: "salt" },
+        { _id: "4053", name: "olive oil" }
     ]);                                                                       
 
     // Takes an Ingredient object and adds it to pantryContents if it is not already present
     const addToPantry = (ingredient: Ingredient) => {
-        if (!pantryContents.find((item) => {return item.id === ingredient.id})) {
+        if (!pantryContents.find((item) => {return item._id === ingredient._id})) {
             setPantryContents(prev => [...prev, ingredient]);
         }
     }
 
     // Removes an ingredient (by id) from pantryContents
     const removeFromPantry = (id: string) => {
-        setPantryContents(prev => prev.filter(item => item.id !== id));
+        setPantryContents(prev => prev.filter(item => item._id !== id));
     };
 
     // Fetch .csv file containing the list of popular ingredients to choose from
@@ -43,8 +43,8 @@ function PantryPage() {
                 
                 // Map the name and id to an Ingredient object and add it to a list
                 const fetchedIngredients: Ingredient[] = lines.map(line => {
-                    const [name, id] = line.split(';').map(val => val.trim());
-                    return {name, id};
+                    const [name, _id] = line.split(';').map(val => val.trim());
+                    return {name, _id};
                 })
 
                 // Update allIngredients to pass to the IngredientForm

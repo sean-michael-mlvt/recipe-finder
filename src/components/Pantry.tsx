@@ -4,13 +4,13 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 interface Ingredient {
-    id: string, 
+    _id: string, 
     name: string
 }
 
 interface PantryProps {
     pantryContents: Ingredient[];
-    onRemove: (id: string) => void;
+    onRemove: (_id: string) => void;
 }
 
 /**
@@ -27,10 +27,39 @@ function Pantry({pantryContents, onRemove}: PantryProps) {
     const { data: session } = useSession();
 
     // Function to be called when Save Pantry button is clicked
-    const handleSavePantry = () => {
+    const handleSavePantry = async () => {
         console.log("PANTRY CONTENTS:");
         console.log(pantryContents);
 
+        if (!session?.user?.email) {
+            alert("You're not logged in!");
+            return;
+        }
+        console.log("Session User Email:" + session.user.email);
+
+        try {
+            const res = await fetch("/api/pantries", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: session.user.email,
+                    ingredients: pantryContents
+                }),
+            });
+    
+            const data = await res.json();
+            
+            if (res.ok) {
+                alert("Pantry saved successfully!");
+            } else {
+                alert(`Error: ${data.message}`);
+            }
+        } catch (err) {
+            console.error("Error saving pantry:", err);
+            alert("Something went wrong.");
+        }
 
     }
 
@@ -49,14 +78,14 @@ function Pantry({pantryContents, onRemove}: PantryProps) {
                 <div className="flex flex-wrap gap-3">
                     {pantryContents.map((ingredient) => (
                         <div
-                        key={ingredient.id}
+                        key={ingredient._id}
                         className="flex items-center gap-2 border-2 border-black rounded-[12px] px-3 pl-4 py-2 text-black text-lg relative group bg-white text-oswald"
                         >
                             {ingredient.name.toUpperCase()}
 
                             {/* X button for removing item */}
                             <button
-                                onClick={() => onRemove(ingredient.id)}
+                                onClick={() => onRemove(ingredient._id)}
                                 className="text-gray-500 hover:text-black opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                                 aria-label={`Remove ${ingredient.name}`}
                             >

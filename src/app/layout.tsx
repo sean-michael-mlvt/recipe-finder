@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Merriweather_Sans, Oswald } from "next/font/google";
 import "./globals.css";
 import { auth } from "../auth";
+import { SessionProvider } from "next-auth/react";
 
 const merriweatherSans = Merriweather_Sans({
   variable: "--font-merriweather-sans",
@@ -33,8 +34,10 @@ export default async function RootLayout({
       <body
         className={`${merriweatherSans.variable} ${oswald.variable} antialiased min-h-screen flex flex-col`}
       >
-        <Navbar session={session}></Navbar>
-        {children}
+        <SessionProvider session={session}>
+          <Navbar session={session} />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );
