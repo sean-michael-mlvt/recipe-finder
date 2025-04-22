@@ -20,6 +20,7 @@ const LoginForm = () => {
         console.error(response.error);
         setError(response.error.message || "An error occurred");
       } else {
+        console.log("logged in");
         router.push("/");
       }
     } catch (e: any) {
@@ -32,7 +33,7 @@ const LoginForm = () => {
     <div className='ShowItemList'>
     <div className="grid mt-8 justify-items-center"> 
       <div className="shadow-lg p-5 rounded-lg border-t-4 bg-white border-black-700">
-       <h1 className="text-xl text-slate-600 font-bold my-4">Login</h1>
+       <h1 className="text-xl text-slate-600 my-4">LOGIN</h1>
       {error && <div className="text-lg text-red-500">{error}</div>}
       <form
   onSubmit={onSubmit}
