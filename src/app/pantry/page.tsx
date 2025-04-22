@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 import IngredientForm from "@/components/IngredientForm";
 import Pantry from "@/components/Pantry";
@@ -12,13 +13,43 @@ interface Ingredient {
 
 function PantryPage() {
 
+    const { data: session, status } = useSession();
+
+
     // State variables
     const[allIngredients, setAllIngredients] = useState<Ingredient[]>([]);      // For populating form dropdown & search
     const [pantryContents, setPantryContents] = useState<Ingredient[]>([        // For displaying & saving pantry contents
-        { _id: "14412", name: "water" },
-        { _id: "2047", name: "salt" },
-        { _id: "4053", name: "olive oil" }
-    ]);                                                                       
+        // { _id: "14412", name: "water" },
+        // { _id: "2047", name: "salt" },
+        // { _id: "4053", name: "olive oil" }
+    ]);       
+    
+    // Fetch the user's pantry from MongoDB once session is ready
+    useEffect(() => {
+        const fetchPantry = async () => {
+        if (!session?.user?.email) return;
+
+        try {
+            const res = await fetch(`/api/pantries?email=${session.user.email}`);
+
+            if (!res.ok) {
+            console.error("Failed to fetch pantry:", res.statusText);
+            return;
+            }
+
+            const data = await res.json();
+            if (data.ingredients) {
+            setPantryContents(data.ingredients);
+            }
+        } catch (error) {
+            console.error("Error fetching pantry:", error);
+        }
+        };
+
+        if (status === "authenticated") {
+        fetchPantry();
+        }
+    }, [session, status]);
 
     // Takes an Ingredient object and adds it to pantryContents if it is not already present
     const addToPantry = (ingredient: Ingredient) => {
