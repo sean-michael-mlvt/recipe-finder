@@ -3,7 +3,6 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import User from "./models/UserSchema";
-
 import connectMongoDB from "../config/mongodb";
 
 export const {
@@ -27,25 +26,23 @@ export const {
         try {
           const user = await User.findOne({ email: credentials.email }).lean();
 
-          if (user) {
-            const isMatch = bcrypt.compare(
-              credentials.password,
-              user.password
-            );
+          if (!user) {
+            console.log("User not found");
+            return null;
+          }
 
-            if (isMatch) {
-              return {
-                id: user._id.toString(),
-                email: user.email,
-                name: user.username,
-              };
-            } else {
-              console.log("Email or Password is not correct");
-              return null;
-            }
+          // ✅ Fix: Await password comparison to properly verify authentication
+          const isMatch = await bcrypt.compare(credentials.password, user.password);
+
+          if (isMatch) {
+            return {
+              id: user._id.toString(),
+              email: user.email,
+              name: user.username,
+            };
           } else {
-             console.log("User not found");
-             return null;
+            console.log("Email or Password is not correct");
+            return null;
           }
         } catch (error: any) {
           console.log("An error occurred: ", error);
