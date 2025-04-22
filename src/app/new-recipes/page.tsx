@@ -14,10 +14,11 @@ type Recipe = {
 
 const pantry = ['apples', 'sugar', 'flour', 'pumpkin']; // Example pantry
 
+
+
 function NewRecipes() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [savedRecipes, setSavedRecipes] = useState<number[]>([]); // save recipe IDs
-
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
@@ -48,6 +49,7 @@ function NewRecipes() {
     };
   
     fetchRecipes();
+    
   }, []);
 
   const toggleSave = (id: number) => {
