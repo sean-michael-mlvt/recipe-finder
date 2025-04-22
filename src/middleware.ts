@@ -25,7 +25,6 @@ export async function middleware(request: NextRequest) {
 export const config = {
     matcher: [
         "/pantry/:path*",
-        "/new-recipes/:path*",
         "/saved-recipes/:path*"
     ],
 };

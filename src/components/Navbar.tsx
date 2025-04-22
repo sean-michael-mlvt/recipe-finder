@@ -81,21 +81,23 @@ const Navbar = ({ session }: NavbarProps) => {
                         </Link>
                         {/* <!-- Desktop Menu Hidden below md screens --> */}
                         <div className='hidden md:ml-6 md:block'>
-                            <div className='flex space-x-2 h-full items-center'>
-                                <Link
+                    <div className='flex space-x-2 h-full items-center'>
+                        {isLoggedIn && (
+                            <Link
                                 href='/pantry'
                                 className='text-xl text-black hover:border-b-2 hover:border-black rounded-md px-3 py-2'
-                                >
-                                Pantry
-                                </Link>
-                                <Link
-                                href='/new-recipes'
-                                className='text-xl text-black hover:border-b-2 hover:border-black rounded-md px-3 py-2'
-                                >
-                                Recipes
-                                </Link>
-                            </div>
-                        </div>
+                            >
+                            Pantry
+                        </Link>
+                    )}
+                    <Link
+                        href='/new-recipes'
+                        className='text-xl text-black hover:border-b-2 hover:border-black rounded-md px-3 py-2'
+                    >
+                        Recipes
+                    </Link>
+                </div>
+            </div>
                     </div>
 
                     {/* <!-- Right Side Menu (Logged Out - Login) --> */}
