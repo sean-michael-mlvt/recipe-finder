@@ -28,6 +28,8 @@ function NewRecipes() {
     const [isLoadingSavedStatus, setIsLoadingSavedStatus] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [togglingSaveId, setTogglingSaveId] = useState<number | null>(null);
+    const [page, setPage] = useState(0);
+    const RESULTS_PER_PAGE = 10;
 
     // --- Fetch Initial Saved Recipes ---
     const fetchInitialSavedState = useCallback(async (email: string) => {
@@ -90,7 +92,9 @@ function NewRecipes() {
             if (!apiKey) {
                 throw new Error("Spoonacular API key is not configured.");
             }
-            const spoonacularUrl = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(query)}&number=10&ranking=2&ignorePantry=true&apiKey=${apiKey}`;
+            const offset = page * RESULTS_PER_PAGE;
+const spoonacularUrl = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(query)}&number=${RESULTS_PER_PAGE}&offset=${offset}&ranking=2&ignorePantry=true&apiKey=${apiKey}`;
+
 
             const res = await fetch(spoonacularUrl);
 
@@ -111,7 +115,7 @@ function NewRecipes() {
         } finally {
             setIsLoadingRecipes(false);
         }
-    }, [session]);
+    }, [session, page]);
 
 
     //Effect to trigger fetches based on session status
@@ -258,10 +262,30 @@ function NewRecipes() {
                     </Link>
                 </div>
 
-                {/* Render Recipe Grid*/}
-                {renderRecipeGrid()}
+               {/* Render Recipe Grid */}
+{renderRecipeGrid()}
 
-                 {error && recipes.length > 0 && <div className="text-center p-4 text-red-600 mt-4">Error: {error}</div>}
+{/* Pagination Buttons */}
+<div className="flex justify-between items-center mt-6">
+  <button
+    onClick={() => setPage(prev => Math.max(prev - 1, 0))}
+    disabled={page === 0}
+    className="bg-gray-200 text-black px-4 py-2 rounded disabled:opacity-50"
+  >
+    ← Previous
+  </button>
+  <span className="text-gray-600 font-medium">Page {page + 1}</span>
+  <button
+    onClick={() => setPage(prev => prev + 1)}
+    className="bg-gray-200 text-black px-4 py-2 rounded"
+  >
+    Next →
+  </button>
+</div>
+
+{error && recipes.length > 0 && (
+  <div className="text-center p-4 text-red-600 mt-4">Error: {error}</div>
+)}
 
             </div>
         </div>
