@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import Card from "./Card";
 
 interface Ingredient {
     _id: string, 
@@ -76,23 +77,20 @@ function Pantry({pantryContents, onRemove}: PantryProps) {
 
                 {/* Grid for item layout, map individual items to divs with x buttons */}
                 <div className="flex flex-wrap gap-3">
-                    {pantryContents.map((ingredient) => (
-                        <div
-                        key={ingredient._id}
-                        className="flex items-center gap-2 border-2 border-black rounded-[12px] px-3 pl-4 py-2 text-black text-lg relative group bg-white text-oswald"
-                        >
-                            {ingredient.name.toUpperCase()}
+                {pantryContents.map((ingredient) => (
 
-                            {/* X button for removing item */}
-                            <button
-                                onClick={() => onRemove(ingredient._id)}
-                                className="text-gray-500 hover:text-black opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                                aria-label={`Remove ${ingredient.name}`}
-                            >
-                                ✕
-                            </button>
-                        </div>
-                    ))}
+                    // Use Card component to display ingredients
+                    <Card key={ingredient._id}>
+                        {ingredient.name.toUpperCase()}
+                        <button
+                        onClick={() => onRemove(ingredient._id)}
+                        className="text-gray-500 hover:text-black opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                        aria-label={`Remove ${ingredient.name}`}
+                        >
+                        ✕
+                        </button>
+                    </Card>
+                ))}
                 </div>
             </div>
 
