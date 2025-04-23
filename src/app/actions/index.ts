@@ -6,6 +6,7 @@ export async function doLogout() {
   await signOut({ redirectTo: "/" });
 }
 
+// form to check credentials and allow for login
 export async function doCredentialLogin(formData: FormData): Promise<any> {
   
   const email = formData.get("email") as string; 

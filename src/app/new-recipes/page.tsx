@@ -1,10 +1,10 @@
 "use client";
 
+// import statements
 import React, { useEffect, useState, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-// Import the type for saved recipe items (adjust path if needed)
 import type { ISavedRecipeItem } from '@/models/SavedRecipesSchema';
 
 // Type for recipes fetched from Spoonacular
@@ -21,12 +21,12 @@ const defaultPantry = ['apples', 'sugar', 'flour', 'pumpkin']; // Example fallba
 function NewRecipes() {
     const { data: session, status } = useSession();
     const [recipes, setRecipes] = useState<SpoonacularRecipe[]>([]);
+
     // Use a Set for efficient lookup of saved recipe IDs
     const [savedRecipeIds, setSavedRecipeIds] = useState<Set<number>>(new Set());
     const [isLoadingRecipes, setIsLoadingRecipes] = useState(true);
     const [isLoadingSavedStatus, setIsLoadingSavedStatus] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    // State to track which recipe is currently being saved/unsaved
     const [togglingSaveId, setTogglingSaveId] = useState<number | null>(null);
 
     // --- Fetch Initial Saved Recipes ---
@@ -37,7 +37,7 @@ function NewRecipes() {
             const response = await fetch(`/api/saved-recipes?email=${encodeURIComponent(email)}`);
             if (!response.ok) {
                 console.error(`Failed to fetch saved recipes status (${response.status})`);
-                 setSavedRecipeIds(new Set()); // Ensure it's cleared on failure
+                 setSavedRecipeIds(new Set());
                  return;
             }
             const data = await response.json();
@@ -45,18 +45,18 @@ function NewRecipes() {
                 const ids = new Set(data.recipes.map((r: ISavedRecipeItem) => Number(r.recipeId)));
                 setSavedRecipeIds(ids);
             } else {
-                 setSavedRecipeIds(new Set()); // Ensure it's cleared if format is wrong
+                 setSavedRecipeIds(new Set()); // checking in case format is wrong
             }
         } catch (err) {
             console.error("Error fetching initial saved recipe state:", err);
-             setSavedRecipeIds(new Set()); // Ensure it's cleared on error
+             setSavedRecipeIds(new Set());
         } finally {
             setIsLoadingSavedStatus(false);
         }
     }, []);
 
 
-    // --- Fetch Recipes from Spoonacular based on Pantry ---
+    //Fetch Recipes from Spoonacular based on Pantry
     const fetchSpoonacularRecipes = useCallback(async () => {
         setIsLoadingRecipes(true);
         setError(null);
@@ -83,6 +83,7 @@ function NewRecipes() {
              console.log("User not logged in, using default pantry.");
         }
 
+        // calling upon spoonacular API and setting a limit to 10 recipes on the page
         try {
             const query = pantryIngredients.join(',');
             const apiKey = process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY;
@@ -93,6 +94,7 @@ function NewRecipes() {
 
             const res = await fetch(spoonacularUrl);
 
+            // error handling to make sure in case the API fails
             if (!res.ok) {
                 throw new Error(`Spoonacular API request failed: ${res.status} - ${res.statusText}`);
             }
@@ -112,7 +114,7 @@ function NewRecipes() {
     }, [session]);
 
 
-    // --- Effect to trigger fetches based on session status ---
+    //Effect to trigger fetches based on session status
     useEffect(() => {
         fetchSpoonacularRecipes();
         if (status === 'authenticated' && session?.user?.email) {
@@ -124,7 +126,7 @@ function NewRecipes() {
     }, [status, session, fetchSpoonacularRecipes, fetchInitialSavedState]);
 
 
-    // --- Handle Save/Unsave Click ---
+    //Handle Save/Unsave Click
     const handleToggleSave = async (recipe: SpoonacularRecipe) => {
         if (status !== 'authenticated' || !session?.user?.email) {
             alert("Please log in to save recipes.");
@@ -168,7 +170,7 @@ function NewRecipes() {
                 throw new Error(errorData.message || `Failed to ${isCurrentlySaved ? 'remove' : 'save'} recipe (${response.status})`);
             }
 
-            // Update Local State On Success
+            // Update Local State if it is working
             setSavedRecipeIds(prev => {
                 const newSet = new Set(prev);
                 if (isCurrentlySaved) {
@@ -188,13 +190,11 @@ function NewRecipes() {
     };
 
 
-    // --- Render Logic ---
     const renderRecipeGrid = () => {
-        // Handle loading/error states for the whole grid
         if (isLoadingRecipes || isLoadingSavedStatus) { // Wait for both recipes and initial saved status
             return <div className="text-center p-4">Loading recipes...</div>;
         }
-        if (error && recipes.length === 0) { // Only show general error if recipes didn't load
+        if (error && recipes.length === 0) {
             return <div className="text-center p-4 text-red-600">Error: {error}</div>;
         }
         if (recipes.length === 0) {
@@ -222,21 +222,17 @@ function NewRecipes() {
                                 <h3 className="text-lg font-bold">{recipe.title.toUpperCase()}</h3>
                                 <p><strong>Your Ingredients Used:</strong> {recipe.usedIngredients.map(i => i.name).join(', ')}</p>
                                 <p><strong>Other Ingredients Used:</strong> {recipe.missedIngredients.map(i => i.name).join(', ')}</p>
-                                {/* Display specific error for this item if save/unsave failed */}
                                 {togglingSaveId === recipe.id && error && <p className="text-red-500 text-sm mt-1">{error}</p>}
                             </div>
 
-                            {/* --- MODIFIED BUTTON --- */}
                             <button
                                 onClick={() => handleToggleSave(recipe)}
-                                disabled={isSaving} // Only disable while actively saving this item
-                                // Original Classes + Conditional Color
+                                disabled={isSaving}
                                 className={`text-xl ${isSaved ? 'text-yellow-400' : 'text-gray-600'} ${isSaving ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 title={isSaved ? "Remove from Saved Recipes" : "Save Recipe"}
                             >
                                 {isSaving ? '...' : (isSaved ? '★' : '☆')}
                             </button>
-                            {/* --- END MODIFIED BUTTON --- */}
                         </div>
                     );
                 })}
@@ -262,10 +258,9 @@ function NewRecipes() {
                     </Link>
                 </div>
 
-                {/* Render Recipe Grid (includes loading/error/empty states) */}
+                {/* Render Recipe Grid*/}
                 {renderRecipeGrid()}
 
-                 {/* Display general errors not tied to a specific item */}
                  {error && recipes.length > 0 && <div className="text-center p-4 text-red-600 mt-4">Error: {error}</div>}
 
             </div>

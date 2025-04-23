@@ -11,16 +11,16 @@ export const POST = async (request: NextRequest) => {
     await connectMongoDB();
     const hashedPassword = await bcrypt.hash(password, 5);
 
-    // ✅ Check if the email is already registered
+    //Check if the email is already registered
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
         { message: "Email has already been registered." },
-        { status: 409 } // Use 409 Conflict status for duplicate entries
+        { status: 409 }
       );
     }
 
-    // ✅ Create a new user
+    //Create a new user
     await User.create({
       username,
       password: hashedPassword,

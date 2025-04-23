@@ -11,10 +11,12 @@ export async function PUT(request: NextRequest) {
   try {
     const user = await User.findOne({ email });
 
+    // checking for user
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
+    // updating the pantry
     const result = await Pantry.updateOne(
       { owner: user._id },
       { $set: { ingredients } },
@@ -23,6 +25,7 @@ export async function PUT(request: NextRequest) {
 
     const existingPantryPresent = result.matchedCount > 0;
 
+    // checking with status messages
     return NextResponse.json(
       { message: existingPantryPresent ? "Pantry updated" : "Pantry created" },
       { status: existingPantryPresent ? 200 : 201 }
@@ -34,6 +37,7 @@ export async function PUT(request: NextRequest) {
 }
 
 
+// checking get requests to ensure correct user information
 export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const email = searchParams.get("email");
