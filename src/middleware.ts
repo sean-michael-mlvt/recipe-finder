@@ -22,6 +22,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
 }
 
+// set of restricted routes
 export const config = {
     matcher: [
         "/pantry/:path*",

@@ -31,9 +31,11 @@ export const {
             return null;
           }
 
-          // ✅ Fix: Await password comparison to properly verify authentication
+          //Await password comparison to properly verify authentication
           const isMatch = await bcrypt.compare(credentials.password, user.password);
 
+
+          // checking to make sure authentication is right
           if (isMatch) {
             return {
               id: user._id.toString(),

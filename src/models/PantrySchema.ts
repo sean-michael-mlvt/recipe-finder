@@ -1,5 +1,7 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
+// Schema for the Pantry collection in MongoDB
+
 interface Ingredient {
   _id: string;
   name: string;
@@ -7,7 +9,7 @@ interface Ingredient {
 
 export interface IPantry extends Document {
   owner: mongoose.Types.ObjectId; 
-  ingredients: Ingredient[];
+  ingredients: Ingredient[]; // array of Pantry details
 }
 
 const pantrySchema = new Schema<IPantry>({
@@ -30,5 +32,6 @@ const pantrySchema = new Schema<IPantry>({
   ],
 });
 
+// Create the Mongoose Model
 const Pantry: Model<IPantry> = mongoose.models.Pantry || mongoose.model<IPantry>("Pantry", pantrySchema);
 export default Pantry;
