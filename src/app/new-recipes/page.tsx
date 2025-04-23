@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 type Recipe = {
   id: number;
@@ -12,17 +13,39 @@ type Recipe = {
   missedIngredients: { name: string }[];
 };
 
-const pantry = ['apples', 'sugar', 'flour', 'pumpkin']; // Example pantry
+const defaultPantry = ['apples', 'sugar', 'flour', 'pumpkin']; // Example pantry
 
 
 
 function NewRecipes() {
+
+  const { data: session } = useSession();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [savedRecipes, setSavedRecipes] = useState<number[]>([]); // save recipe IDs
+
   useEffect(() => {
     const fetchRecipes = async () => {
+
+      let pantryIngredients = defaultPantry;
+
+      if (session?.user?.email) {
+        try {
+          const res = await fetch(`/api/pantries?email=${session.user.email}`);
+          const data = await res.json();
+
+          if (res.ok && Array.isArray(data.ingredients)) {
+            pantryIngredients = data.ingredients.map((i: any) => i.name);
+          } else {
+            console.warn("User has no pantry or response malformed, using fallback data");
+          }
+        } catch (error) {
+          console.error("Failed to fetch user pantry:", error);
+        }
+      }
+
       try {
-        const query = pantry.join(',');
+
+        const query = pantryIngredients.join(',');
         const res = await fetch(
           `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${query}&number=6&apiKey=${process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY}`
         );
