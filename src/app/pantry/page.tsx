@@ -17,8 +17,8 @@ function PantryPage() {
 
 
     // State variables
-    const[allIngredients, setAllIngredients] = useState<Ingredient[]>([]);      // For populating form dropdown & search
-    const [pantryContents, setPantryContents] = useState<Ingredient[]>([        // For displaying & saving pantry contents
+    const[allIngredients, setAllIngredients] = useState<Ingredient[]>([]); 
+    const [pantryContents, setPantryContents] = useState<Ingredient[]>([        
         // { _id: "14412", name: "water" },
         // { _id: "2047", name: "salt" },
         // { _id: "4053", name: "olive oil" }
@@ -67,7 +67,7 @@ function PantryPage() {
     useEffect(() => {
         fetch('/data/top-1k-ingredients.csv')
             .then((res) => res.text())
-            .then((text) => {                       // text = csv rows split by \n (newline characters)
+            .then((text) => { 
                 
                 // Get individual lines
                 const lines = text.trim().split("\n");
