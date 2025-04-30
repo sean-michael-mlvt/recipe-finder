@@ -22,7 +22,7 @@ export default function Home() {
         <h1 className="text-5xl md:text-8xl text-white"> FIND RECIPES </h1>
 
         <h3 className="text-l md:text-3xl text-white"> THAT USE WHAT YOU ALREADY HAVE </h3>
-        <p className="text-l md:text-3xl text-green-300 text-center">
+        <p className="text-l md:text-2xl text-white font-bold text-center">
   Don't know what to make? <br />Recipe Finder has got your back! <br />Add ingredients to the pantry and let <br />the app help you find recipes that interest you!
 </p>
 
